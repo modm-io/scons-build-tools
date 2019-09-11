@@ -140,7 +140,8 @@ Heap:  {heap_fmt:>11s} ({heap_p:2.1f}% available)
 def show_size(env, source, alias='__size'):
     if env.has_key('CONFIG_DEVICE_MEMORY'):
         action = Action(size_action, cmdstr="$SIZECOMSTR")
-    elif env.has_key('CONFIG_DEVICE_NAME'):
+    elif env.has_key('CONFIG_DEVICE_NAME') and ("avr" in env["ARCHITECTURE"]):
+        # the mcu parameter is an AVR specific feature
         action = Action("$SIZE -C --mcu=$CONFIG_DEVICE_NAME %s" % source[0].path,
                         cmdstr="$SIZECOMSTR")
     else:
